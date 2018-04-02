@@ -19,7 +19,11 @@ namespace Vidly.Models
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
-    {
+    { 
+        //DB now aware of customer class
+        public DbSet<Customer> Customer { get; set; }
+        public DbSet<Movie> Movie { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

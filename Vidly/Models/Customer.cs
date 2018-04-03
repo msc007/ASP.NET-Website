@@ -10,7 +10,7 @@ namespace Vidly.Models
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required] 
         [StringLength(255)]
         public string Name { get; set; }
 
@@ -21,9 +21,10 @@ namespace Vidly.Models
 
         //[Display] will change html field 
         [Display(Name = "Membership Type")]
-        public byte MembershipTypeId { get; set; }
+        public byte MembershipTypeId { get; set; }     //byte type is implicit [Required]
 
-        [Display(Name = "Date of Birth")]                       
+        [Display(Name = "Date of Birth")]        
+        [Min18YearsIfMamber]
         public DateTime? Birthdate { get; set; }
     }
 }

@@ -9,26 +9,37 @@
 <h2>New Customer</h2>
 @using (Html.BeginForm("Save", "Customer"))
 {
+    @Html.ValidationSummary(true, "Please fix following errors.")
     <div class="form-group">
         <!--Create Label Name-->
         @Html.LabelFor(m => m.Customer.Name)
         <!--helper method for textbox automatically support input validation based on model; bootstrap-form-control -->
         @Html.TextBoxFor(m => m.Customer.Name, new { @class = "form-control" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Customer.Birthdate)
-        @Html.TextBoxFor(m => m.Customer.Birthdate, "{0:d MMM yyy}", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Customer.Name)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Customer.MembershipTypeId)
         @Html.DropDownListFor(m => m.Customer.MembershipTypeId, new SelectList(Model.MembershipTypes, "Id", "MembershipName"), "Select Membership Type", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Customer.MembershipTypeId)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Customer.Birthdate)
+        @Html.TextBoxFor(m => m.Customer.Birthdate, "{0:d MMM yyy}", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Customer.Birthdate)
     </div>
     <div class="checkbox">
         <label>
             @Html.CheckBoxFor(m => m.Customer.IsSubscribedToNewsletter) Subscribed to Newsletter?
         </label>
     </div>
-    @Html.HiddenFor(m=>m.Customer.Id)
+    @Html.HiddenFor(m => m.Customer.Id)
+    @Html.AntiForgeryToken() <!--prevent Cross Site Request Forgery attack (store encrypted cookie)-->
     <button type="submit" class="btn btn-primary btn-primary">Save</button>
 
 } <!-- end of block, html will be disposed(render </form>)-->
+
+<!--client-side validation (only works for standard asp.net annotation)-->
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqeuryval");
+}
